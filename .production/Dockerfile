@@ -1,7 +1,7 @@
 # stage1 as builder
 FROM node:20.7.0-alpine3.18 as builder
 
-WORKDIR /app
+WORKDIR /src
 
 # Copy the package.json and install dependencies
 COPY package*.json ./
@@ -27,7 +27,7 @@ COPY ./.production/.nginx/nginx.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy from the stahg 1
-COPY --from=builder /app/.output /usr/share/nginx/html
+COPY --from=build /src/.output /usr/share/nginx/html/.output
 
 EXPOSE 80
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
