@@ -1,0 +1,8 @@
+/* @import url("Sketch.otf"); */
+
+/* @font-face("Sketch", "~/Sketch", 400, normal, otf); */
+
+@font-face {
+  font-family: "Sketch";
+  src: url("Sketch.otf");
+}
