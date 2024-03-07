@@ -30,5 +30,5 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /src/.output ./.output/
 
 # EXPOSE 80
-# ENTRYPOINT ["nginx", "-g", "daemon off;"]
-CMD [ "node", ".output/server/index.mjs" ]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+# CMD [ "node", ".output/server/index.mjs" ]
