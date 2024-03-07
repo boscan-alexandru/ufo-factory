@@ -1,7 +1,7 @@
 # stage1 as builder
 FROM node:20.7.0-alpine3.18 as builder
 
-WORKDIR /src
+WORKDIR /app
 
 # Copy the package.json and install dependencies
 COPY package*.json ./
@@ -17,7 +17,7 @@ COPY . .
 ENV NODE_ENV production
 
 # Build the project
-RUN pnpm run build
+RUN pnpm run generate
 
 
 FROM fholzer/nginx-brotli as production-build
@@ -27,8 +27,7 @@ COPY ./.production/.nginx/nginx.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy from the stahg 1
-COPY --from=builder /src/.output ./.output/
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-# EXPOSE 80
+EXPOSE 80
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
-# CMD [ "node", ".output/server/index.mjs" ]
