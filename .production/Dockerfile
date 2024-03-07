@@ -27,7 +27,8 @@ COPY ./.production/.nginx/nginx.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy from the stahg 1
-COPY --from=build /src/.output /src/.output
+COPY --from=builder /src/.output ./.output/
 
-EXPOSE 80
+# EXPOSE 80
+# ENTRYPOINT ["nginx", "-g", "daemon off;"]
 CMD [ "node", ".output/server/index.mjs" ]
